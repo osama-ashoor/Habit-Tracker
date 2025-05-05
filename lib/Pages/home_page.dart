@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:habit_tracker/Componets/habit_tile.dart';
 import 'package:habit_tracker/Theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,8 +17,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Habit Tracker',
+          style: GoogleFonts.ibmPlexMono(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         actions: [
           IconButton(
@@ -32,13 +39,13 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: const Center(
-        child: Text(
-          'Habit Tracker',
-          style: TextStyle(
-            fontSize: 24,
+      body: ListView(
+        children: const [
+          HabitTile(
+            habitName: 'Drink Water',
+            habitDescription: 'Drink 2 liters of water daily',
           ),
-        ),
+        ],
       ),
     );
   }
