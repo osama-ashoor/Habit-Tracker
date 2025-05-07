@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:habit_tracker/Componets/habit_tile.dart';
 import 'package:habit_tracker/Theme/theme_provider.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,11 +16,15 @@ class _HomePageState extends State<HomePage> {
   TextEditingController habitNameController = TextEditingController();
   TextEditingController habitDescriptionController = TextEditingController();
   late Box habitDataBox;
+  late Box habitIdBox;
+  late int habitId;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     habitDataBox = Hive.box('habitDataBox');
+    habitIdBox = Hive.box('habitIdBox');
   }
 
   @override
@@ -70,12 +74,16 @@ class _HomePageState extends State<HomePage> {
               TextButton(
                 onPressed: () {
                   // Add habit to the list
-                  setState(() {
-                    habitDataBox.add({
-                      'name': habitNameController.text,
-                      'description': habitDescriptionController.text,
-                    });
+                  habitId = habitIdBox.get('habitId', defaultValue: 0);
+                  habitDataBox.put(habitId, {
+                    'name': habitNameController.text,
+                    'description': habitDescriptionController.text,
                   });
+
+                  // Increment the habitId for the next habit
+                  habitIdBox.put('habitId', habitId + 1);
+
+                  // Clear the text fields
                   habitNameController.clear();
                   habitDescriptionController.clear();
 
@@ -126,12 +134,31 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: habitDataBox.length,
-        itemBuilder: (context, index) {
-          return HabitTile(
-            habitName: habitDataBox.getAt(index)['name'],
-            habitDescription: habitDataBox.getAt(index)['description'],
+      body: ValueListenableBuilder(
+        valueListenable: habitDataBox.listenable(),
+        builder: (context, box, _) {
+          if (box.isEmpty) {
+            return Center(
+              child: Text(
+                'No habits added yet!',
+                style: GoogleFonts.ibmPlexMono(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            );
+          }
+          // Display the list of habits
+          return ListView.builder(
+            itemCount: box.length,
+            itemBuilder: (context, index) {
+              final habit = box.getAt(index);
+              return HabitTile(
+                habitName: habit['name'],
+                habitDescription: habit['description'],
+                habitId: habitDataBox.keyAt(index),
+              );
+            },
           );
         },
       ),

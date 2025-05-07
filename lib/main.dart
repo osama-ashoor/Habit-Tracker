@@ -10,6 +10,7 @@ void main() async {
   await Hive.openBox('habitBox');
   await Hive.openBox('settingsBox');
   await Hive.openBox("habitDataBox");
+  await Hive.openBox("habitIdBox");
 
   runApp(
     ChangeNotifierProvider(
