@@ -4,7 +4,8 @@ A simple and intuitive **Habit Tracker App** built with **Flutter** to help user
 
 ## 🚀 Features
 
-* ✅ Add, edit, and delete daily habits
+* ✅ Add and delete daily habits
+* 🗺️ View progress in simple heatmap
 * 🗓️ Track daily habit completion
 * 🌗 Support for Light Mode and Dark Mode
 * 📦 Local storage using Hive database
