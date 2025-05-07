@@ -1,0 +1,10 @@
+flutter_native_splash:
+  android: true # Set to true for a fullscreen splash screen on Android
+  ios: true # Set to true to enable the splash screen on iOS
+  color: "#ffffff" # Background color of the splash screen
+
+  android_12:
+    color: "#ffffff" # Background color of the splash screen for Android 12 and above
+    image: assets/logo.png # Path to the splash screen icon for Android 12 and above
+    image_dark: assets/darklogo.png # Path to the dark mode splash screen icon for Android 12 and above
+    color_dark: "#080A09" # Background color of the splash screen for dark mode on Android 12 and above
