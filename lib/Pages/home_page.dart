@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:habit_tracker/Componets/habit_tile.dart';
 import 'package:habit_tracker/Theme/theme_provider.dart';
@@ -40,10 +39,14 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: ListView(
-        children: const [
+        children: [
           HabitTile(
             habitName: 'Drink Water',
             habitDescription: 'Drink 2 liters of water daily',
+          ),
+          HabitTile(
+            habitName: 'Code Daily',
+            habitDescription: 'Code for at least 2 hours daily',
           ),
         ],
       ),
